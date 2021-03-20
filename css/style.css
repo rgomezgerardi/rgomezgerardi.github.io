@@ -1,0 +1,254 @@
+@font-face{
+    font-family: Roboto;
+    src: url(fonts/roboto-regular.ttf);
+    font-weight: normal;
+}
+
+@font-face{
+    font-family: Roboto;
+    src: url(fonts/roboto-bold.ttf);
+    font-weight: 700;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    background: #f3f3f3;
+    font-family: 'Roboto', sans-serif;
+}
+
+html[data-theme="dark"] body {
+    background:	#282C33;
+}
+
+
+/* ================================================================ */
+/* ============================ Header ============================ */
+/* ================================================================ */
+header {
+    margin: 2% auto 2% auto;
+    width: 54%;
+    padding: 2% 0 2% 0;
+}
+
+html[data-theme="dark"] header {
+    color: #ffffff;
+}
+
+header div {
+    margin: 2% auto 2% auto;
+}
+
+/* Switch  */
+.container-switch {
+    margin: 2% auto 2% auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.container-switch input[type=checkbox]{
+    visibility: hidden;
+    text-align: right;
+}
+
+.container-switch label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 40px;
+    height: 20px;
+    background: grey;
+    display: block;
+    border-radius: 20px;
+    position: relative;
+}
+
+.container-switch label:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    background: #fff;
+    transition: 0.3s;
+}
+
+.container-switch input:checked + label {
+    /*background: #bada55;*/
+    /*background: #0077ff;*/
+    background: #2b87dc;
+}
+
+.container-switch input:checked + label:after {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+}
+
+.container-switch label:active:after {
+    width: 24px;
+}
+
+/* Logo */
+header .logo {
+    width: 100%;
+}
+
+header .logo img {
+    display: block;
+    max-width: 30%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+}
+
+/* Name */
+header .name {
+    width: 100%;
+}
+
+header .name h1 {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+/* Bio */
+header .bio {
+    width: calc(100% - 4px);
+    font-size: 18px;
+}
+
+
+/* ================================================================ */
+/* ========================== Container =========================== */
+/* ================================================================ */
+.container a {
+    display: block;
+    margin: 2% auto 4% auto;
+    width: 60px;
+    height: 60px;
+    background: #4285F4;
+    color: #ffffff;
+    border-radius: 50%;
+    transition: .3s ease all;
+}
+
+.container:hover a {
+    animation: icon .5s ease;
+}
+
+@keyframes icon {
+    from {
+	transform: rotate3d(0,0,0,0);
+    }
+
+    to {
+	transform: rotate3d(0,1,0, 360deg);
+    }
+}
+
+.container a i {
+    font-size: 30px;
+    line-height: 60px;
+}
+
+
+/* ================================================================ */
+/* =========================== Buttons ============================ */
+/* ================================================================ */
+.buttons {
+    margin: 2% auto 2% auto;
+}
+
+.buttons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    font-size: 18px;
+    padding: 2%;
+    margin: 2% auto 2% auto;
+    text-decoration: none;
+    color: #f3f3f3;
+}
+
+.buttons a i {
+    margin-right: 2%;
+}
+
+.buttons .personalities { background: #51a9ab; }
+.buttons .twitter { background: #1da1f2; }
+.buttons .instagram { background: #c13584; }
+.buttons .facebook { background: #3b5998; }
+.buttons .github { background: #666666; }
+.buttons .reddit { background: #ff4500; }
+.buttons .telegram { background: #0088cc; }
+.buttons .paypal { background: #253b80; }
+/*.buttons .gmail { background: #4285F4; }*/
+.buttons .gmail { background: #FBBC05; }
+
+
+/* ================================================================ */
+/* ============================ Footer ============================ */
+/* ================================================================ */ 
+footer {
+    margin: 2% auto 2% auto;
+    padding: 2%;
+}
+
+html[data-theme="dark"] footer {
+    color: #ffffff;
+}
+
+html[data-theme="dark"] footer a {
+    color: #4285F4;
+}
+
+html.transition,
+html.transition *,
+html.transition *:before,
+html.transition *:after {
+    transition: all 450ms !important;
+    transition-delay: 0 !important; 
+}
+
+
+/* ================================================================ */
+/* ========================= Mediaqueries ========================= */
+/* ================================================================ */
+@media screen and (max-width: 1280px) {
+    body {
+        width: 80%;
+    }
+
+    header {
+    	width: 69%;
+    }
+
+    .buttons a {
+	width: 65%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    body {
+        width: 80%;
+    }
+
+    header {
+    	width: 104%;
+	margin: 4% auto 4% auto;
+    }
+
+    .buttons a {
+	width: 100%;
+	margin: 4% auto 4% auto;
+    }
+}
