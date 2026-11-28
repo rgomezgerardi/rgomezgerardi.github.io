@@ -103,50 +103,43 @@ function resize(){
 
 // Group
 const group = new THREE.Group();
-group.position.x += 5;
-group.position.z += 5;
+group.position.set(5, 0, 5);
 scene.add(group);
 
+
 // Models
-let floor = null;
-const loader1 = new GLTFLoader();
+const loader = new GLTFLoader();
 
-loader1.load('glb/floor.glb', (gltf) => {
-    floor = gltf.scene;
-    floor.traverse((obj) => {
-        if (obj.isMesh) {
-            obj.material.map.magFilter = THREE.NearestFilter;
-            obj.material.map.minFilter = THREE.NearestFilter;
-        }
-    })
-    group.add(floor);
-    
-    // const size = new THREE.Box3().setFromObject(model1).getSize(new THREE.Vector3());
-    // console.log(size); 
-})
+const pieces = [
+    { name: 'floor', path: 'glb/floor.glb', position: [0, 0, 0],            rotationY: 0 },
+    { name: 'wall-left',  path: 'glb/wall.glb',  position: [-66.5, 12.66, 0.5],   rotationY: Math.PI / 2 },
+    { name: 'wall-right',  path: 'glb/wall.glb',  position: [-0.5, 12.66, -66.5],  rotationY: 0 },
+];
 
+async function loadModel(path) {
+   const gltf = await loader.loadAsync(path);
+   gltf.scene.traverse((obj) => {
+       if (obj.isMesh) {
+           obj.material.map.magFilter = THREE.NearestFilter;
+           obj.material.map.minFilter = THREE.NearestFilter;
+       }
+   })
 
-let wall = null;
-const loader2 = new GLTFLoader();
-loader2.load('glb/wall.glb', (gltf) => {
-    wall = gltf.scene;
-    wall.traverse((obj) => {
-        if (obj.isMesh) {
-            obj.material.map.magFilter = THREE.NearestFilter;
-            obj.material.map.minFilter = THREE.NearestFilter;
-        }
-    })
-    wall.position.set(-0.5 * BB_UNIT, 12.66 * BB_UNIT, (-66 - 0.5) * BB_UNIT);
-    group.add(wall);
-    
-    
-    // Left Wall 
-    const leftWall = wall.clone();    // shares geometry and material
-    leftWall.rotation.y = Math.PI / 2;
-    // leftWall.position.z += BB_UNIT;   // 1p nudge at 90° and 270°
-    leftWall.position.set((-67+0.5) * BB_UNIT, 12.66 * BB_UNIT, (1 - 0.5) * BB_UNIT);
-    group.add(leftWall);
-})
+   return gltf.scene;
+}
+
+const paths = [... new Set(pieces.map(p => p.path))];
+const loaded = await Promise.all(paths.map(loadModel));
+const models = Object.fromEntries(paths.map((path, i) => [path, loaded[i]]))
+
+for (const piece of pieces) {
+    const mesh = models[piece.path].clone();
+    mesh.position.set(piece.position[0] * BB_UNIT, piece.position[1] * BB_UNIT, piece.position[2] * BB_UNIT);
+    mesh.rotation.y = piece.rotationY;
+    mesh.name = piece.name;
+    group.add(mesh);
+}
+
 
 
 // group.position.x = 0;                // at 0° and 180°
